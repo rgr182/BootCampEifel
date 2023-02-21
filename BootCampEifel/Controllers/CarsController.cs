@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using BootCampEifel.Utils;
-using Microsoft.AspNetCore.Http;
 
 namespace BootCampEifel.Controllers
 {
@@ -8,23 +7,45 @@ namespace BootCampEifel.Controllers
     [Route("[controller]")]
     public class CarsController : ControllerBase
     {
-        readonly Cars _carros;
+        readonly List<Cars> _carros;
 
-        public CarsController ()
+        public CarsController()
         {
-            _carros = new Cars();
-        }       
+            _carros = new List<Cars>
+            {
+                new Cars
+                {
+                    Motor = "V8",
+                    Speed = "200km/h",
+                    Brand = "Toyota",
+                    Year = 2023,
+                    Color = "Red"
+                },
+
+                new Cars
+                {
+                    Motor = "V6",
+                    Speed = "180km/h",
+                    Brand = "Mazda",
+                    Year = 2020,
+                    Color = "Blue"
+                },
+
+                new Cars
+                {
+                    Motor = "V4",
+                    Speed = "150km/h",
+                    Brand = "Mercedes Benz",
+                    Year = 2015,
+                    Color = "White"
+                }
+             };
+        }
 
         [HttpGet(Name = "GetCar")]
-        public List<string> Get(char search)
+        public List<Cars> Get()
         {
-            List<string> llantas = new List<string>();
-            llantas.Add(_carros.Llanta("rojo", 12));
-            llantas.Add(_carros.Llanta("verde", 15));
-            llantas.Add(_carros.Llanta("amarillo", 17));
-            llantas.Add(_carros.Llanta("negro", 20));
-            var result = llantas.Where(x => x.Contains(search)).ToList();
-            return result;
+            return _carros;
         }
     }
 }
