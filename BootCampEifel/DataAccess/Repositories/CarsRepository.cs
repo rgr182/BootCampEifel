@@ -16,6 +16,7 @@ namespace BootCampEifel.DataAccess.Repositories
 
         public async Task<Cars> CreateCar(Cars carr) {
             await _context.Cars.AddAsync(carr);
+            await _context.SaveChangesAsync();            
             return carr;
         }
 
@@ -37,3 +38,4 @@ namespace BootCampEifel.DataAccess.Repositories
         public Task<Cars> CreateCar(Cars carr);
     }
 }
+
