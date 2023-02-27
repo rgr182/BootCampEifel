@@ -1,3 +1,7 @@
+using BootCampEifel.DataAccess.Context;
+using BootCampEifel.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,9 +11,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Database Setup
+string connectionString = builder.Configuration.GetConnectionString("EscuelaConnection");
+
+Environment.SetEnvironmentVariable("Connection", connectionString);
+builder.Services.AddDbContext<SchoolSystemContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EscuelaConnection"));
+});
+
+
+#region Repositories Registry
+
+builder.Services.AddScoped<ICarsRepository, CarsRepository>();
+
+#endregion
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline.s
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

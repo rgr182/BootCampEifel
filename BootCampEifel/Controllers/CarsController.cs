@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using BootCampEifel.Utils;
+using BootCampEifel.DataAccess.Entities;
+using BootCampEifel.DataAccess.Repositories;
 
 namespace BootCampEifel.Controllers
 {
@@ -7,45 +8,24 @@ namespace BootCampEifel.Controllers
     [Route("[controller]")]
     public class CarsController : ControllerBase
     {
-        readonly List<Cars> _carros;
+        readonly ICarsRepository _carros;
 
-        public CarsController()
+        public CarsController(ICarsRepository carros)
         {
-            _carros = new List<Cars>
-            {
-                new Cars
-                {
-                    Motor = "V8",
-                    Speed = "200km/h",
-                    Brand = "Toyota",
-                    Year = 2023,
-                    Color = "Red"
-                },
-
-                new Cars
-                {
-                    Motor = "V6",
-                    Speed = "180km/h",
-                    Brand = "Mazda",
-                    Year = 2020,
-                    Color = "Blue"
-                },
-
-                new Cars
-                {
-                    Motor = "V4",
-                    Speed = "150km/h",
-                    Brand = "Mercedes Benz",
-                    Year = 2015,
-                    Color = "White"
-                }
-             };
+            _carros = carros;
         }
 
         [HttpGet(Name = "GetCar")]
-        public List<Cars> Get()
+        public async Task<Cars> Get(int CarId)
         {
-            return _carros;
+            return await _carros.GetCarById(CarId);
+        }
+
+
+        [HttpPost(Name = "CreateCar")]
+        public async Task<Cars> Get([FromBody] Cars MyCar)
+        {
+            return await _carros.CreateCar(MyCar);
         }
     }
 }
