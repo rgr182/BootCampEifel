@@ -23,7 +23,7 @@ builder.Services.AddDbContext<SchoolSystemContext>(options =>
 
 #region Repositories Registry
 
-builder.Services.AddScoped<ICarsRepository, CarsRepository>();
+builder.Services.AddScoped<IContactsRepository, ContactsRepsitory>();
 
 #endregion
 

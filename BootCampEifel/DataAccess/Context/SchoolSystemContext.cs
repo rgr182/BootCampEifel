@@ -14,6 +14,6 @@ namespace BootCampEifel.DataAccess.Context
         {
         }
 
-        public DbSet<Cars> Cars { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 }
